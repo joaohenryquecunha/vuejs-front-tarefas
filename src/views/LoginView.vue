@@ -1,41 +1,39 @@
 <template>
   <div class="login">
     <div class="container">
-        <div class="box-login-text">
-          <h1 class="emotion">🤘</h1>
-          <p class="login-text-paragraph" >A fortuna fica ao lado daquele que ousa.</p>
-          <span class="login-text-span" >Todo progresso ocorre fora da zona de conforto.</span>
-            <div class="box-login-inferior">
-              <div class="box-left">
-                <div class="left-mini-box">
-                  <div class="box-contraste"></div>
-                </div>
-              </div>
-              <div class="box-right">
-                  <div class="box-icon"></div>
-                  <div class="box-icon1"></div>
-                
-              </div>
+      <div class="box-login-text">
+        <h1 class="emotion">🤘</h1>
+        <p class="login-text-paragraph">A fortuna fica ao lado daquele que ousa.</p>
+        <span class="login-text-span">Todo progresso ocorre fora da zona de conforto.</span>
+        <div class="box-login-inferior">
+          <div class="box-left">
+            <div class="left-mini-box">
+              <div class="box-contraste"></div>
             </div>
+          </div>
+          <div class="box-right">
+            <div class="box-icon"></div>
+            <div class="box-icon1"></div>
+          </div>
         </div>
+      </div>
+      <div class="box-inputs">
+        <form @submit.prevent="login">
+          <h1>Login</h1>
+          <label for="email">Endereço de e-mail</label>
+          <input type="email" id="email" placeholder="email@email.com.br" v-model="email" required>
 
-        <div class="box-inputs">
-          <form @submit.prevent="login">
-            <h1>Login</h1>
-        <label for="email">Endereço de e-mail</label>
-        <input type="email" id="email" placeholder="email@email.com.br" v-model="email" required>
-        
-        <label for="password">Senha de acesso</label>
-        <input type="password" id="password" placeholder="********"  v-model="password" required>
-        <div class="botao-submit">
-         <p @click="redirectToCadastro" class="link" >Não tenho conta</p>
-          <button type="submit">Acessar</button>
-        </div>
-      </form>
-        </div>        
+          <label for="password">Senha de acesso</label>
+          <input type="password" id="password" placeholder="********" v-model="password" required>
+          <div class="botao-submit">
+            <p @click="redirectToCadastro" class="link">Não tenho conta</p>
+            <button type="submit">Acessar</button>
+          </div>
+        </form>
       </div>
     </div>
-    <!-- <button @click="getProducts" style="background-color: red; width: 200px; height: 50px; color: aliceblue;" >CLICK</button>
+  </div>
+  <!-- <button @click="getProducts" style="background-color: red; width: 200px; height: 50px; color: aliceblue;" >CLICK</button>
     <div style="display: grid; width: 500px;">
       <label for="">nome do produto</label>
       <input type="text" v-model="productName">
@@ -55,53 +53,53 @@
 </template>
 
 <script>
-  export default {
-    name: 'LoginView',
+export default {
+  name: 'LoginView',
 
-    data() {
-      return{
-        route: this.$route,
-        email: '',
-        password: '',
+  data() {
+    return {
+      route: this.$route,
+      email: '',
+      password: '',
 
-      }
-    },
-   
-    mounted(){
-      this.$axios.baseURL;
-      console.log(this.$route.params.id);
-    
-      
+    }
+  },
+
+  mounted() {
+    this.$axios.baseURL;
+    console.log(this.$route.params.id);
+
+
   },
   methods: {
     async login() {
-  try {
-    const response = await this.$axios.post('login', {
-      email: this.email,
-      password: this.password
-    });
+      try {
+        const response = await this.$axios.post('login', {
+          email: this.email,
+          password: this.password
+        });
 
-    if (response.data.access_token) {
-      const accessToken = response.data.access_token;
-      sessionStorage.setItem('token', accessToken);
-      console.log('Login bem-sucedido', response);
-      this.$router.push('/');
-    } 
+        if (response.data.access_token) {
+          const accessToken = response.data.access_token;
+          sessionStorage.setItem('token', accessToken);
+          console.log('Login bem-sucedido', response);
+          this.$router.push('/');
+        }
 
 
-  } catch (error) {
-    console.error('Erro ao efetuar login:', error);
-  }
-},
+      } catch (error) {
+        console.error('Erro ao efetuar login:', error);
+      }
+    },
 
-async redirectToCadastro() {
-        const container = document.querySelector('.container');
-        container.style.opacity = 0;
-        await new Promise(resolve => setTimeout(resolve, 500)); // Aguarda a animação de saída
-        this.$router.push('/cadastro');
-        await this.$nextTick(); // Aguarda a próxima renderização para iniciar a animação de entrada
-        container.style.transition = 'opacity 1s';
-        container.style.opacity = 1;
+    async redirectToCadastro() {
+      const container = document.querySelector('.container');
+      container.style.opacity = 0;
+      await new Promise(resolve => setTimeout(resolve, 500));
+      this.$router.push('/cadastro');
+      await this.$nextTick();
+      container.style.transition = 'opacity 1s';
+      container.style.opacity = 1;
     }
 
 
@@ -128,12 +126,11 @@ async redirectToCadastro() {
     // }
   },
 
-  }
+}
 
 </script>
 
 <style lang="scss" scoped>
-
 .container {
   padding: 30px;
   display: flex;
@@ -142,7 +139,7 @@ async redirectToCadastro() {
   height: 657px;
   top: 150px;
   transition: opacity 0.5s;
-  opacity: 1; 
+  opacity: 1;
   background: #ffffff;
 }
 
@@ -159,6 +156,7 @@ async redirectToCadastro() {
   padding: 20px;
   background-color: #F7F7F7;
   width: 50%;
+
   p {
     position: relative;
     top: 50px;
@@ -167,6 +165,7 @@ async redirectToCadastro() {
     line-height: 36px;
     text-align: left;
   }
+
   span {
     position: relative;
     bottom: 40px;
@@ -180,41 +179,50 @@ async redirectToCadastro() {
 
 .box-login-text:hover {
   background: #000000;
+
   .box-right {
     background: #ffffff !important;
   }
+
   .box-icon {
     background: #000000 !important;
 
   }
+
   .box-icon1 {
     background: #9e9898 !important;
   }
+
   .box-left {
     background: linear-gradient(270deg, rgba(255, 255, 255, 0) -10.29%, rgba(255, 255, 255, 0.195) 23.09%, rgba(255, 255, 255, 0) 82.38%);
   }
+
   .emotion {
     position: relative;
     top: 35px;
   }
-  p{
+
+  p {
     color: #ffffff !important;
   }
+
   span {
     color: #ffffff !important;
 
   }
-} 
+}
 
 .box-inputs {
   width: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  form{
+
+  form {
     display: grid;
     width: 80%;
     gap: 10px;
+
     h1 {
       font-size: 27px;
       font-weight: 800;
@@ -222,14 +230,16 @@ async redirectToCadastro() {
       text-align: left;
 
     }
-    label{
+
+    label {
       font-size: 18px;
       font-weight: 400;
       line-height: 28.8px;
       text-align: left;
       color: #000E1F;
     }
-    input{
+
+    input {
       height: 55px;
       border: solid 1px #E5E5E5;
       padding-left: 10px;
@@ -238,6 +248,7 @@ async redirectToCadastro() {
       line-height: 28.8px;
 
     }
+
     input[type="email"]::placeholder,
     input[type="password"]::placeholder {
       position: relative;
@@ -246,12 +257,14 @@ async redirectToCadastro() {
       font-weight: 100;
       color: #8C8A97;
     }
+
     .botao-submit {
       position: relative;
       top: 25px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       button {
         width: 170px;
         height: 55px;
@@ -262,7 +275,8 @@ async redirectToCadastro() {
         line-height: 28.8px;
         cursor: pointer;
       }
-      .link{
+
+      .link {
         text-decoration: none;
         color: #81858E;
         font-size: 18px;
@@ -276,10 +290,11 @@ async redirectToCadastro() {
 
 
 .box-login-inferior {
-  width:235px;
-  height:100px;
+  width: 235px;
+  height: 100px;
   display: flex;
   justify-content: space-between;
+
   .box-right {
     width: 100px;
     height: 100px;
@@ -288,28 +303,30 @@ async redirectToCadastro() {
     justify-content: center;
     background-color: #000000;
     transition: all 0.3s;
-    
-      .box-icon {
-        position: relative;
-        top: -5px;
-        left: 15px;
-        width: 35.52px;
-        height: 35.52px;
-        transform: rotate(45deg);
-        background: #ffffff;
-        z-index: 1;
-      }
-      .box-icon1 {
-        position: relative;
-        top: 12px;
-        left: -20px;
-        width: 35.52px;
-        height: 35.52px;
-        transform: rotate(45deg);
-        background: #FFFFFF4D;
-      }
-    
+
+    .box-icon {
+      position: relative;
+      top: -5px;
+      left: 15px;
+      width: 35.52px;
+      height: 35.52px;
+      transform: rotate(45deg);
+      background: #ffffff;
+      z-index: 1;
+    }
+
+    .box-icon1 {
+      position: relative;
+      top: 12px;
+      left: -20px;
+      width: 35.52px;
+      height: 35.52px;
+      transform: rotate(45deg);
+      background: #FFFFFF4D;
+    }
+
   }
+
   .box-left {
     width: 100px;
     height: 100px;
@@ -320,16 +337,17 @@ async redirectToCadastro() {
 .emotion {
   font-size: 50px;
   position: relative;
-  top: 0; 
+  top: 0;
   transition: top 0.5s ease;
 }
 
-.fade-enter-active, .fade-leave-active {
-    transition: opacity 2s;
-}
-.fade-enter, .fade-leave-to {
-    opacity: 0;
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 2s;
 }
 
-
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
 </style>
