@@ -68,8 +68,6 @@ export default {
   mounted() {
     this.$axios.baseURL;
     console.log(this.$route.params.id);
-
-
   },
   methods: {
     async login() {
